@@ -1,6 +1,5 @@
 export const fetchMouserData = async (partNumber) => {
   return new Promise((res, rej) => {
-    const mouserKey = '82675baf-9a58-4d5a-af3f-e3bbcf486560';
     const requestOptions = {
       method: 'POST',
       headers: {
@@ -15,7 +14,7 @@ export const fetchMouserData = async (partNumber) => {
     };
 
     fetch(
-      `https://api.mouser.com/api/v1/search/partnumber?apiKey=${mouserKey}`,
+      `https://api.mouser.com/api/v1/search/partnumber?apiKey=${process.env.REACT_APP_MOUSER_KEY}`,
       requestOptions
     )
       .then((response) => response.json())
@@ -26,7 +25,6 @@ export const fetchMouserData = async (partNumber) => {
 
 export const fetchRutronikData = async (partNumber) => {
   return new Promise((res, rej) => {
-    const rutronikKey = 'cc6qyfg2yfis';
     const raw = '';
 
     const requestOptions = {
@@ -36,7 +34,7 @@ export const fetchRutronikData = async (partNumber) => {
     };
 
     fetch(
-      `https://www.rutronik24.com/api/article/?apikey=${rutronikKey}&mpn=${partNumber}`,
+      `/api/article/?apikey=${process.env.REACT_APP_RUTRONIK_KEY}&mpn=${partNumber}`,
       requestOptions
     )
       .then((response) => response.json())

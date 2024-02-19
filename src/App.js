@@ -1,3 +1,4 @@
+import './App.css';
 import React, { useState } from 'react';
 import { fetchMouserData, fetchRutronikData } from './action';
 
@@ -6,15 +7,12 @@ function App() {
   const [quantity, setQuantity] = useState('');
   const [mouserPrice, setMouserPrice] = useState(null);
   const [rutronikPrice, setRutronikPrice] = useState(null);
-  const [tmePrice, setTmePrice] = useState(null);
 
   const fetchPrices = async () => {
     if (!partNumber || !quantity) {
       alert('Please enter part number and quantity');
       return;
     }
-
-    const tmeKey = '0f89076a8f6852a5cebe39c5422318538800cd5c0e6ee';
 
     try {
       const [mouserData, rutronikData] = await Promise.all([
@@ -25,19 +23,18 @@ function App() {
       const price = getPriceForQuantity(mouserData, quantity);
       const price2 = getPriceFromRutronik(rutronikData, quantity);
 
-      console.log(price2);
       if (price) {
         setMouserPrice(price);
       } else {
         setMouserPrice(null);
-        console.log('Price not found for the specified quantity');
+        console.log('Price1 not found for the specified quantity');
       }
 
       if (price2) {
         setRutronikPrice(price2);
       } else {
         setRutronikPrice(null);
-        console.log('Price not found for the specified quantity');
+        console.log('Price2 not found for the specified quantity');
       }
     } catch (error) {
       console.error('Error fetching prices:', error);
@@ -62,7 +59,6 @@ function App() {
     return null;
   };
 
-  // Function to extract price based on quantity from Rutronik API response
   const getPriceFromRutronik = (rutronikData, quantity) => {
     const priceBreaks = rutronikData?.pricebreaks;
 
@@ -70,19 +66,24 @@ function App() {
       return null;
     }
 
-    // Find the price for the provided quantity
     for (let i = priceBreaks.length - 1; i >= 0; i--) {
       const priceBreak = priceBreaks[i];
-      if (quantity >= parseInt(priceBreak.quantity)) {
+      if (quantity == parseInt(priceBreak.quantity)) {
         return priceBreak.price;
       }
     }
 
-    return null; // Price not found for the specified quantity
+    return null;
+  };
+
+  const convertToINR = (priceInEuros) => {
+    // Assuming 1 Euro = 88 Indian Rupees
+    const exchangeRate = 88;
+    return priceInEuros * exchangeRate;
   };
 
   return (
-    <div>
+    <div className='container'>
       <h1>Part Price Checker</h1>
       <label>
         Part Number:
@@ -104,8 +105,10 @@ function App() {
 
       <h2>Prices:</h2>
       <p>Mouser Price: {mouserPrice || 'NA'}</p>
-      <p>Rutronik Price: {rutronikPrice || 'NA'}</p>
-      {/* <p>TME Price: {tmePrice || 'NA'}</p>  */}
+      <p>
+        Rutronik Price:{' '}
+        {rutronikPrice ? `₹${convertToINR(rutronikPrice)}` : 'NA'}
+      </p>
     </div>
   );
 }
