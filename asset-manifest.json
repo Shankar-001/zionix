@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/zionix/static/css/main.a0785252.css",
+    "main.js": "/zionix/static/js/main.c4f8610b.js",
+    "static/js/453.630fc56e.chunk.js": "/zionix/static/js/453.630fc56e.chunk.js",
+    "index.html": "/zionix/index.html",
+    "main.a0785252.css.map": "/zionix/static/css/main.a0785252.css.map",
+    "main.c4f8610b.js.map": "/zionix/static/js/main.c4f8610b.js.map",
+    "453.630fc56e.chunk.js.map": "/zionix/static/js/453.630fc56e.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.a0785252.css",
+    "static/js/main.c4f8610b.js"
+  ]
+}
