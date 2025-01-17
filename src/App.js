@@ -84,7 +84,7 @@ function App() {
 
   return (
     <div className='container'>
-      <h1>Part Price Checker</h1>
+      <h1>Part Price Checkerrrrrr</h1>
       <label>
         Part Number:
         <input
